@@ -1,0 +1,513 @@
+/* =========================================================
+   НОДА — скрипты сайта
+   ========================================================= */
+
+/* Настройки формы.
+   formEndpoint — адрес, куда отправлять заявки (POST, JSON).
+   Пока он пустой, форма открывает почтовую программу с готовым письмом
+   на адрес из блока контактов (#contact-email в index.html). */
+const CONFIG = {
+  formEndpoint: '',
+};
+
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+
+/* ---------- Год в подвале ---------- */
+const yearEl = document.getElementById('year');
+if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+/* ---------- Мобильное меню ---------- */
+(function initMenu() {
+  const burger = document.querySelector('.burger');
+  const menu = document.getElementById('menu');
+  if (!burger || !menu) return;
+
+  const setOpen = (open) => {
+    menu.hidden = !open;
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    document.body.classList.toggle('is-locked', open);
+  };
+
+  burger.addEventListener('click', () => setOpen(menu.hidden));
+  menu.addEventListener('click', (e) => {
+    if (e.target.closest('a')) setOpen(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !menu.hidden) {
+      setOpen(false);
+      burger.focus();
+    }
+  });
+  window.matchMedia('(min-width: 901px)').addEventListener('change', (e) => {
+    if (e.matches) setOpen(false);
+  });
+})();
+
+/* ---------- Аккордеоны ---------- */
+document.querySelectorAll('[data-accordion]').forEach((acc) => {
+  acc.addEventListener('click', (e) => {
+    const head = e.target.closest('.acc__head');
+    if (!head || !acc.contains(head)) return;
+    const item = head.parentElement;
+    const willOpen = !item.classList.contains('is-open');
+
+    acc.querySelectorAll('.acc__item.is-open').forEach((opened) => {
+      opened.classList.remove('is-open');
+      opened.querySelector('.acc__head').setAttribute('aria-expanded', 'false');
+    });
+
+    if (willOpen) {
+      item.classList.add('is-open');
+      head.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
+
+/* ---------- Появление блоков при прокрутке ---------- */
+(function initReveal() {
+  const items = document.querySelectorAll('[data-reveal]');
+  if (!items.length) return;
+
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    items.forEach((el) => el.classList.add('is-in'));
+    return;
+  }
+
+  // соседние блоки в одном ряду появляются по очереди
+  const groups = new Map();
+  items.forEach((el) => {
+    const parent = el.parentElement;
+    const index = groups.get(parent) || 0;
+    el.style.setProperty('--d', `${Math.min(index, 5) * 0.08}s`);
+    groups.set(parent, index + 1);
+  });
+
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-in');
+        io.unobserve(entry.target);
+      });
+    },
+    { rootMargin: '0px 0px -8% 0px', threshold: 0.08 }
+  );
+  items.forEach((el) => io.observe(el));
+})();
+
+/* ---------- Манифест: слова проявляются по мере прокрутки ---------- */
+(function initStatement() {
+  const el = document.getElementById('statement');
+  if (!el || reduceMotion) return;
+
+  // оборачиваем каждое слово в span, сохраняя <em>
+  const wrapWords = (node) => {
+    [...node.childNodes].forEach((child) => {
+      if (child.nodeType === Node.TEXT_NODE) {
+        const frag = document.createDocumentFragment();
+        child.textContent.split(/( +)/).forEach((part) => {
+          if (!part) return;
+          if (/^ +$/.test(part)) {
+            frag.appendChild(document.createTextNode(' '));
+          } else {
+            const span = document.createElement('span');
+            span.className = 'w';
+            span.textContent = part;
+            frag.appendChild(span);
+          }
+        });
+        child.replaceWith(frag);
+      } else if (child.nodeType === Node.ELEMENT_NODE) {
+        wrapWords(child);
+      }
+    });
+  };
+  wrapWords(el);
+
+  const words = [...el.querySelectorAll('.w')];
+  let ticking = false;
+
+  const update = () => {
+    ticking = false;
+    const rect = el.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const progress = clamp((vh * 0.88 - rect.top) / (rect.height + vh * 0.38), 0, 1);
+    const head = progress * (words.length + 1);
+    words.forEach((w, i) => {
+      w.style.opacity = String(0.16 + 0.84 * clamp(head - i, 0, 1));
+    });
+  };
+
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
+})();
+
+/* ---------- Граф на первом экране ---------- */
+(function initGraph() {
+  const canvas = document.getElementById('graph');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+
+  const INK = '12, 12, 13';
+  const ACCENT = '#ff5a1f';
+
+  // основной маршрут проекта (координаты в долях от размера холста)
+  const main = [
+    { x: 0.13, y: 0.14, label: 'идея', side: 'top' },
+    { x: 0.50, y: 0.09, label: 'аналитика' },
+    { x: 0.80, y: 0.30, label: 'дизайн' },
+    { x: 0.34, y: 0.47, label: 'разработка' },
+    { x: 0.74, y: 0.67, label: 'тесты' },
+    { x: 0.30, y: 0.87, label: 'релиз', final: true },
+  ];
+  // фоновые узлы
+  const minor = [
+    { x: 0.31, y: 0.26 }, { x: 0.63, y: 0.22 }, { x: 0.93, y: 0.11 },
+    { x: 0.08, y: 0.38 }, { x: 0.93, y: 0.50 },
+    { x: 0.14, y: 0.64 }, { x: 0.52, y: 0.76 }, { x: 0.90, y: 0.86 },
+    { x: 0.07, y: 0.92 }, { x: 0.60, y: 0.95 },
+  ];
+
+  const nodes = [...main, ...minor].map((n, i) => ({
+    ...n,
+    isMain: i < main.length,
+    phase: i * 1.7 + 0.5,
+    speed: 0.35 + ((i * 37) % 10) / 28,
+    amp: i < main.length ? 5 : 9,
+    px: 0, py: 0, // текущее положение в пикселях
+    ox: 0, oy: 0, // смещение от курсора
+  }));
+
+  // фоновые связи: каждый малый узел соединён с двумя ближайшими
+  const links = [];
+  nodes.forEach((a, i) => {
+    if (a.isMain) return;
+    nodes
+      .map((b, j) => ({ j, d: Math.hypot(a.x - b.x, a.y - b.y) }))
+      .filter((o) => o.j !== i)
+      .sort((p, q) => p.d - q.d)
+      .slice(0, 2)
+      .forEach((o) => links.push([i, o.j]));
+  });
+
+  let w = 0;
+  let h = 0;
+  let dpr = 1;
+  const pointer = { x: -9999, y: -9999 };
+
+  const resize = () => {
+    const rect = canvas.getBoundingClientRect();
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    w = rect.width;
+    h = rect.height;
+    canvas.width = Math.round(w * dpr);
+    canvas.height = Math.round(h * dpr);
+    if (reduceMotion) draw(0);
+  };
+
+  const CYCLE = 9; // секунд на один проход от идеи до релиза
+  const TRAVEL = 0.74; // доля цикла, пока импульс в пути
+
+  function draw(t) {
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, w, h);
+
+    // положение узлов
+    nodes.forEach((n) => {
+      const drift = reduceMotion ? 0 : 1;
+      let x = n.x * w + Math.sin(t * n.speed + n.phase) * n.amp * drift;
+      let y = n.y * h + Math.cos(t * n.speed * 0.8 + n.phase) * n.amp * drift;
+
+      // узлы слегка расступаются перед курсором
+      const dx = x - pointer.x;
+      const dy = y - pointer.y;
+      const dist = Math.hypot(dx, dy) || 1;
+      const force = clamp(1 - dist / 150, 0, 1);
+      const tx = (dx / dist) * force * 22;
+      const ty = (dy / dist) * force * 22;
+      n.ox += (tx - n.ox) * 0.1;
+      n.oy += (ty - n.oy) * 0.1;
+
+      n.px = x + n.ox;
+      n.py = y + n.oy;
+    });
+
+    // фоновые связи
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = `rgba(${INK}, 0.13)`;
+    ctx.beginPath();
+    links.forEach(([a, b]) => {
+      ctx.moveTo(nodes[a].px, nodes[a].py);
+      ctx.lineTo(nodes[b].px, nodes[b].py);
+    });
+    ctx.stroke();
+
+    // основной маршрут
+    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = `rgba(${INK}, 0.85)`;
+    ctx.beginPath();
+    main.forEach((_, i) => {
+      const n = nodes[i];
+      if (i === 0) ctx.moveTo(n.px, n.py);
+      else ctx.lineTo(n.px, n.py);
+    });
+    ctx.stroke();
+
+    // импульс: проходит маршрут, задерживается на релизе, затем гаснет
+    const segs = main.length - 1;
+    const phase = reduceMotion ? TRAVEL : (t % CYCLE) / CYCLE;
+    const travel = clamp(phase / TRAVEL, 0, 1);
+    const eased = travel * travel * (3 - 2 * travel);
+    const pos = eased * segs;
+    const fade = phase > 0.92 ? 1 - (phase - 0.92) / 0.08 : 1;
+    const seg = Math.min(Math.floor(pos), segs - 1);
+    const k = pos - seg;
+    const from = nodes[seg];
+    const to = nodes[seg + 1];
+    const hx = from.px + (to.px - from.px) * k;
+    const hy = from.py + (to.py - from.py) * k;
+
+    ctx.globalAlpha = fade;
+    ctx.lineWidth = 3;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = ACCENT;
+    ctx.beginPath();
+    ctx.moveTo(nodes[0].px, nodes[0].py);
+    for (let i = 1; i <= seg; i++) ctx.lineTo(nodes[i].px, nodes[i].py);
+    ctx.lineTo(hx, hy);
+    ctx.stroke();
+
+    if (travel < 1) {
+      ctx.fillStyle = 'rgba(255, 90, 31, 0.2)';
+      ctx.beginPath();
+      ctx.arc(hx, hy, 13, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = ACCENT;
+      ctx.beginPath();
+      ctx.arc(hx, hy, 5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+
+    // малые узлы
+    nodes.forEach((n) => {
+      if (n.isMain) return;
+      ctx.fillStyle = `rgba(${INK}, 0.32)`;
+      ctx.beginPath();
+      ctx.arc(n.px, n.py, 3, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    // главные узлы и подписи
+    const fontSize = w < 420 ? 10.5 : 12;
+    ctx.font = `500 ${fontSize}px "JetBrains Mono", ui-monospace, monospace`;
+    ctx.textBaseline = 'middle';
+    if ('letterSpacing' in ctx) ctx.letterSpacing = '0.06em';
+
+    main.forEach((m, i) => {
+      const n = nodes[i];
+      const reached = pos >= i - 0.02 ? fade : 0;
+      const r = m.final ? 11 : 7.5;
+
+      if (m.final && reached > 0 && travel >= 1) {
+        // кольцо расходится от «релиза», когда импульс дошёл
+        const ring = clamp((phase - TRAVEL) / (0.92 - TRAVEL), 0, 1);
+        ctx.strokeStyle = `rgba(255, 90, 31, ${(1 - ring) * 0.6 * fade})`;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(n.px, n.py, r + ring * 34, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = '#f2f0eb';
+      ctx.strokeStyle = `rgb(${INK})`;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.arc(n.px, n.py, r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      if (reached > 0) {
+        ctx.globalAlpha = reached;
+        ctx.fillStyle = ACCENT;
+        ctx.beginPath();
+        ctx.arc(n.px, n.py, m.final ? r : r - 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalAlpha = 1;
+      }
+
+      const label = m.label.toUpperCase();
+      ctx.fillStyle = `rgb(${INK})`;
+      if (m.side === 'top') {
+        ctx.textAlign = 'center';
+        ctx.fillText(label, n.px, n.py - r - 14);
+      } else {
+        const toLeft = m.x > 0.62;
+        ctx.textAlign = toLeft ? 'right' : 'left';
+        ctx.fillText(label, n.px + (toLeft ? -(r + 10) : r + 10), n.py + 1);
+      }
+    });
+  }
+
+  let running = false;
+  let rafId = 0;
+  const loop = (ms) => {
+    if (!running) return;
+    draw(ms / 1000);
+    rafId = requestAnimationFrame(loop);
+  };
+  const start = () => {
+    if (running || reduceMotion) return;
+    running = true;
+    rafId = requestAnimationFrame(loop);
+  };
+  const stop = () => {
+    running = false;
+    cancelAnimationFrame(rafId);
+  };
+
+  canvas.addEventListener('pointermove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    pointer.x = e.clientX - rect.left;
+    pointer.y = e.clientY - rect.top;
+  });
+  canvas.addEventListener('pointerleave', () => {
+    pointer.x = -9999;
+    pointer.y = -9999;
+  });
+
+  if ('ResizeObserver' in window) new ResizeObserver(resize).observe(canvas);
+  else window.addEventListener('resize', resize);
+  resize();
+
+  if (reduceMotion) {
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => draw(0));
+    return;
+  }
+
+  // анимация идёт только пока граф виден
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver((entries) => {
+      entries.forEach((entry) => (entry.isIntersecting ? start() : stop()));
+    }).observe(canvas);
+  } else {
+    start();
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stop();
+    else if (canvas.getBoundingClientRect().bottom > 0) start();
+  });
+})();
+
+/* ---------- Форма заявки ---------- */
+(function initForm() {
+  const form = document.getElementById('brief');
+  if (!form) return;
+  const status = document.getElementById('brief-status');
+  const emailLink = document.getElementById('contact-email');
+  const email = emailLink ? emailLink.getAttribute('href').replace(/^mailto:/, '') : '';
+
+  const setStatus = (text, isError) => {
+    status.textContent = text;
+    status.classList.toggle('is-error', Boolean(isError));
+  };
+
+  const setFieldError = (input, message) => {
+    const field = input.closest('.field');
+    let hint = field.querySelector('.field__error');
+    field.classList.toggle('is-error', Boolean(message));
+    if (message) {
+      if (!hint) {
+        hint = document.createElement('p');
+        hint.className = 'field__error';
+        hint.id = `${input.id}-error`;
+        field.appendChild(hint);
+      }
+      hint.textContent = message;
+      input.setAttribute('aria-invalid', 'true');
+      input.setAttribute('aria-describedby', hint.id);
+    } else {
+      if (hint) hint.remove();
+      input.removeAttribute('aria-invalid');
+      input.removeAttribute('aria-describedby');
+    }
+  };
+
+  form.addEventListener('input', (e) => {
+    if (e.target.matches('.field input') && e.target.value.trim()) setFieldError(e.target, '');
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    setStatus('');
+
+    const name = form.elements.name;
+    const contact = form.elements.contact;
+    let firstInvalid = null;
+
+    [[name, 'Напишите, как к вам обращаться'], [contact, 'Оставьте контакт, чтобы мы могли ответить']].forEach(
+      ([input, message]) => {
+        const empty = !input.value.trim();
+        setFieldError(input, empty ? message : '');
+        if (empty && !firstInvalid) firstInvalid = input;
+      }
+    );
+    if (firstInvalid) {
+      firstInvalid.focus();
+      return;
+    }
+
+    const data = {
+      name: name.value.trim(),
+      contact: contact.value.trim(),
+      types: [...form.querySelectorAll('input[name="type"]:checked')].map((i) => i.value),
+      about: form.elements.about.value.trim(),
+    };
+
+    // 1) если задан адрес сервера — отправляем заявку туда
+    if (CONFIG.formEndpoint) {
+      const button = form.querySelector('button[type="submit"]');
+      button.disabled = true;
+      setStatus('Отправляем…');
+      try {
+        const res = await fetch(CONFIG.formEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        setStatus('Спасибо! Заявка отправлена — ответим в течение рабочего дня.');
+      } catch (err) {
+        setStatus(`Не получилось отправить заявку. Напишите нам на ${email}.`, true);
+      } finally {
+        button.disabled = false;
+      }
+      return;
+    }
+
+    // 2) иначе открываем почтовую программу с готовым письмом
+    const body = [
+      `Имя: ${data.name}`,
+      `Контакт: ${data.contact}`,
+      data.types.length ? `Что нужно: ${data.types.join(', ')}` : '',
+      data.about ? `\nО проекте:\n${data.about}` : '',
+    ]
+      .filter(Boolean)
+      .join('\n');
+
+    window.location.href =
+      `mailto:${email}?subject=${encodeURIComponent('Заявка с сайта')}&body=${encodeURIComponent(body)}`;
+    setStatus(`Открыли письмо в вашей почтовой программе. Если оно не появилось — напишите на ${email}.`);
+  });
+})();

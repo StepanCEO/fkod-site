@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Нода — студия разработки цифровых продуктов</title>
+  <meta name="description" content="Нода — студия разработки. Проектируем и создаём веб-платформы, мобильные приложения и AI-сервисы: от аналитики и дизайна до запуска и поддержки.">
+  <meta name="theme-color" content="#0C0C0D">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Нода — студия разработки цифровых продуктов">
+  <meta property="og:description" content="Веб-платформы, мобильные приложения и AI-сервисы. От идеи до работающего продукта.">
+  <meta property="og:locale" content="ru_RU">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="assets/fonts/onest-cyrillic-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+
+<!-- SVG-спрайт -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 15 15 5M7 5h8v8"/>
+  </symbol>
+  <symbol id="i-logo" viewBox="0 0 28 28" fill="none">
+    <circle cx="7.5" cy="20.5" r="4.5" stroke="currentColor" stroke-width="2"/>
+    <path d="M11 17 17 11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="21" cy="7" r="5.5" fill="#FF5A1F"/>
+  </symbol>
+</svg>
+
+<a class="skip" href="#main">К содержимому</a>
+
+<!-- ============ ШАПКА ============ -->
+<header class="header" id="top">
+  <a class="logo" href="#top" aria-label="Нода — на главную">
+    <svg class="logo__mark" aria-hidden="true"><use href="#i-logo"/></svg>
+    <span class="logo__text">нода</span>
+  </a>
+  <nav class="nav" aria-label="Основная навигация">
+    <a href="#services">услуги</a>
+    <a href="#work">проекты</a>
+    <a href="#process">процесс</a>
+    <a href="#faq">вопросы</a>
+  </nav>
+  <a class="header__cta" href="#contact">Обсудить проект</a>
+  <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="menu">
+    <span></span><span></span>
+  </button>
+</header>
+
+<!-- Мобильное меню -->
+<div class="menu" id="menu" hidden>
+  <nav class="menu__nav" aria-label="Мобильная навигация">
+    <a href="#services"><span>01</span>Услуги</a>
+    <a href="#work"><span>02</span>Проекты</a>
+    <a href="#process"><span>03</span>Процесс</a>
+    <a href="#faq"><span>04</span>Вопросы</a>
+    <a href="#contact"><span>05</span>Контакты</a>
+  </nav>
+  <a class="btn btn--accent menu__cta" href="#contact">Обсудить проект
+    <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>
+  </a>
+</div>
+
+<main id="main">
+
+  <!-- ============ ПЕРВЫЙ ЭКРАН ============ -->
+  <section class="hero">
+    <div class="container hero__grid">
+      <div class="hero__text">
+        <p class="badge" data-reveal>
+          <span class="badge__dot" aria-hidden="true"></span>
+          Открываемся в&nbsp;январе 2027&nbsp;· берём первые проекты
+        </p>
+        <h1 class="hero__title" data-reveal>
+          Студия разработки, где идея становится <em>работающим продуктом</em>.
+        </h1>
+        <p class="hero__lead" data-reveal>
+          Проектируем и&nbsp;разрабатываем веб-платформы, мобильные приложения и&nbsp;AI-сервисы.
+          Берём на&nbsp;себя весь путь&nbsp;— от&nbsp;аналитики и&nbsp;дизайна до&nbsp;запуска и&nbsp;поддержки.
+        </p>
+        <div class="hero__actions" data-reveal>
+          <a class="btn btn--accent" href="#contact">Обсудить проект
+            <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+          <a class="btn btn--line" href="#services">Что мы делаем</a>
+        </div>
+      </div>
+
+      <div class="hero__visual" data-reveal>
+        <canvas class="graph" id="graph" role="img"
+          aria-label="Схема: путь проекта от идеи через аналитику, дизайн, разработку и тесты к релизу"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ БЕГУЩАЯ СТРОКА ============ -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      <div class="ticker__group">
+        <span>Next.js</span><i></i><span>React Native</span><i></i><span>TypeScript</span><i></i><span>Python</span><i></i>
+        <span>PostgreSQL</span><i></i><span>Swift</span><i></i><span>Kotlin</span><i></i><span>Figma</span><i></i>
+        <span>LLM&nbsp;/&nbsp;RAG</span><i></i><span>Docker</span><i></i>
+      </div>
+      <div class="ticker__group">
+        <span>Next.js</span><i></i><span>React Native</span><i></i><span>TypeScript</span><i></i><span>Python</span><i></i>
+        <span>PostgreSQL</span><i></i><span>Swift</span><i></i><span>Kotlin</span><i></i><span>Figma</span><i></i>
+        <span>LLM&nbsp;/&nbsp;RAG</span><i></i><span>Docker</span><i></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ПРИНЦИПЫ ============ -->
+  <section class="section" id="principles">
+    <div class="container">
+      <div class="section__head">
+        <h2 class="section__title" data-reveal>Наши <em>принципы</em>.</h2>
+        <p class="section__note" data-reveal>
+          Мы новая студия и&nbsp;пока не&nbsp;можем показать сотню кейсов.
+          Зато можем пообещать&nbsp;то, что зависит только от&nbsp;нас.
+        </p>
+      </div>
+
+      <div class="stats">
+        <div class="stat" data-reveal>
+          <p class="stat__num">2<small>нед.</small></p>
+          <p class="stat__label">Длина спринта. В&nbsp;конце каждого&nbsp;— демо работающего результата.</p>
+        </div>
+        <div class="stat" data-reveal>
+          <p class="stat__num">1<small>день</small></p>
+          <p class="stat__label">Отвечаем на&nbsp;заявку в&nbsp;течение одного рабочего дня.</p>
+        </div>
+        <div class="stat" data-reveal>
+          <p class="stat__num">100<small>%</small></p>
+          <p class="stat__label">Кода, дизайна и&nbsp;доступов принадлежит вам с&nbsp;первого дня.</p>
+        </div>
+        <div class="stat" data-reveal>
+          <p class="stat__num">1<small>команда</small></p>
+          <p class="stat__label">На&nbsp;весь цикл: аналитика, дизайн, разработка и&nbsp;запуск.</p>
+        </div>
+      </div>
+
+      <div class="bento">
+        <article class="tile" data-reveal>
+          <p class="tile__tag">прозрачность</p>
+          <h3 class="tile__title">Вы видите всё, что видим&nbsp;мы</h3>
+          <p class="tile__text">Доступ к&nbsp;задачам, макетам и&nbsp;репозиторию&nbsp;— с&nbsp;первого дня. Никаких «чёрных ящиков» и&nbsp;отчётов раз в&nbsp;месяц.</p>
+        </article>
+        <article class="tile" data-reveal>
+          <p class="tile__tag">этапы</p>
+          <h3 class="tile__title">Платите за&nbsp;результат этапа</h3>
+          <p class="tile__text">Делим проект на&nbsp;короткие этапы с&nbsp;понятным результатом и&nbsp;ценой. Следующий начинаем, когда вы приняли предыдущий.</p>
+        </article>
+        <article class="tile tile--accent" data-reveal>
+          <p class="tile__tag">честность</p>
+          <h3 class="tile__title">Говорим «нет», если это не&nbsp;сработает</h3>
+          <p class="tile__text">Если функция не&nbsp;нужна пользователям или задачу проще решить готовым сервисом&nbsp;— скажем об&nbsp;этом до&nbsp;начала работ, а&nbsp;не&nbsp;после.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ МАНИФЕСТ ============ -->
+  <section class="statement" aria-label="От идеи до продукта">
+    <div class="container">
+      <p class="statement__text" id="statement">От&nbsp;идеи&nbsp;— через аналитику, дизайн и&nbsp;код&nbsp;— <em>до&nbsp;продукта, которым пользуются люди.</em></p>
+    </div>
+  </section>
+
+  <!-- ============ УСЛУГИ ============ -->
+  <section class="panel" id="services">
+    <div class="container">
+      <div class="section__head">
+        <h2 class="section__title" data-reveal>Услуги<em>.</em></h2>
+        <p class="section__note" data-reveal>Можно заказать проект целиком или отдельный этап&nbsp;— только дизайн, только разработку или аудит.</p>
+      </div>
+
+      <div class="acc acc--light" data-accordion>
+        <div class="acc__item is-open">
+          <button class="acc__head" type="button" aria-expanded="true" aria-controls="srv-1">
+            <span class="acc__num">01</span>
+            <span class="acc__title">Веб-платформы</span>
+            <span class="acc__toggle" aria-hidden="true"></span>
+          </button>
+          <div class="acc__body" id="srv-1">
+            <div class="acc__inner">
+              <div class="srv">
+                <p class="srv__text">Порталы, личные кабинеты, маркетплейсы и&nbsp;SaaS-сервисы. Проектируем архитектуру с&nbsp;запасом на&nbsp;рост и&nbsp;делаем интерфейсы, которыми удобно пользоваться каждый день.</p>
+                <p class="srv__stack">Next.js / React / TypeScript / Python / PostgreSQL</p>
+                <a class="link" href="#contact">Обсудить задачу <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc__item">
+          <button class="acc__head" type="button" aria-expanded="false" aria-controls="srv-2">
+            <span class="acc__num">02</span>
+            <span class="acc__title">Мобильные приложения</span>
+            <span class="acc__toggle" aria-hidden="true"></span>
+          </button>
+          <div class="acc__body" id="srv-2">
+            <div class="acc__inner">
+              <div class="srv">
+                <p class="srv__text">Приложения для iOS и&nbsp;Android: от&nbsp;прототипа и&nbsp;интерфейса до&nbsp;разработки, тестирования и&nbsp;публикации в&nbsp;App&nbsp;Store, Google&nbsp;Play и&nbsp;RuStore.</p>
+                <p class="srv__stack">React Native / Expo / Swift / Kotlin</p>
+                <a class="link" href="#contact">Обсудить задачу <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc__item">
+          <button class="acc__head" type="button" aria-expanded="false" aria-controls="srv-3">
+            <span class="acc__num">03</span>
+            <span class="acc__title">UX/UI-дизайн</span>
+            <span class="acc__toggle" aria-hidden="true"></span>
+          </button>
+          <div class="acc__body" id="srv-3">
+            <div class="acc__inner">
+              <div class="srv">
+                <p class="srv__text">Исследования, прототипы, дизайн-системы и&nbsp;интерфейсы. Сначала разбираемся в&nbsp;задачах пользователей и&nbsp;бизнеса&nbsp;— потом рисуем.</p>
+                <p class="srv__stack">Figma / Прототипы / Дизайн-системы</p>
+                <a class="link" href="#contact">Обсудить задачу <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc__item">
+          <button class="acc__head" type="button" aria-expanded="false" aria-controls="srv-4">
+            <span class="acc__num">04</span>
+            <span class="acc__title">Интернет-магазины</span>
+            <span class="acc__toggle" aria-hidden="true"></span>
+          </button>
+          <div class="acc__body" id="srv-4">
+            <div class="acc__inner">
+              <div class="srv">
+                <p class="srv__text">Каталог, корзина, оплата и&nbsp;доставка. Интегрируем магазин с&nbsp;1С, CRM, складом и&nbsp;платёжными сервисами, чтобы заказы не&nbsp;терялись между системами.</p>
+                <p class="srv__stack">Каталоги / Оплата / Интеграции с&nbsp;1С и&nbsp;CRM</p>
+                <a class="link" href="#contact">Обсудить задачу <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc__item">
+          <button class="acc__head" type="button" aria-expanded="false" aria-controls="srv-5">
+            <span class="acc__num">05</span>
+            <span class="acc__title">AI и&nbsp;автоматизация</span>
+            <span class="acc__toggle" aria-hidden="true"></span>
+          </button>
+          <div class="acc__body" id="srv-5">
+            <div class="acc__inner">
+              <div class="srv">
+                <p class="srv__text">Встраиваем языковые модели в&nbsp;продукты и&nbsp;процессы: ассистенты поддержки, поиск по&nbsp;базе знаний, разбор документов и&nbsp;автоматизация рутины.</p>
+                <p class="srv__stack">LLM / RAG / Интеграции по&nbsp;API</p>
+                <a class="link" href="#contact">Обсудить задачу <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc__item">
+          <button class="acc__head" type="button" aria-expanded="false" aria-controls="srv-6">
+            <span class="acc__num">06</span>
+            <span class="acc__title">Поддержка и&nbsp;развитие</span>
+            <span class="acc__toggle" aria-hidden="true"></span>
+          </button>
+          <div class="acc__body" id="srv-6">
+            <div class="acc__inner">
+              <div class="srv">
+                <p class="srv__text">После запуска остаёмся рядом: следим за&nbsp;стабильностью, исправляем ошибки, добавляем новые функции и&nbsp;готовим продукт к&nbsp;росту нагрузки.</p>
+                <p class="srv__stack">Мониторинг / Доработки / Аудит кода</p>
+                <a class="link" href="#contact">Обсудить задачу <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ПРОЕКТЫ / КОНЦЕПТЫ ============ -->
+  <section class="section" id="work">
+    <div class="container">
+      <div class="section__head">
+        <h2 class="section__title" data-reveal>Что мы <em>строим</em>.</h2>
+        <p class="section__note" data-reveal>Первые кейсы появятся здесь после запуска. Пока&nbsp;— концепты, которые показывают, с&nbsp;какими задачами к&nbsp;нам приходить.</p>
+      </div>
+
+      <div class="work">
+        <!-- 01 -->
+        <article class="card card--dark" data-reveal>
+          <div class="card__top"><span>01 / 03</span><span class="chip">концепт</span></div>
+          <div class="mock" aria-hidden="true">
+            <div class="dash">
+              <div class="dash__bar"><i></i><i></i><i></i></div>
+              <div class="dash__body">
+                <div class="dash__side"><b class="on"></b><b></b><b></b><b></b></div>
+                <div class="dash__main">
+                  <div class="dash__kpis">
+                    <div><small>Заявки</small><strong>128</strong></div>
+                    <div><small>Конверсия</small><strong>4,2%</strong></div>
+                    <div><small>Ответ</small><strong>2 мин</strong></div>
+                  </div>
+                  <div class="dash__chart">
+                    <span style="--h:34%"></span><span style="--h:48%"></span><span style="--h:40%"></span>
+                    <span style="--h:62%"></span><span style="--h:55%"></span><span style="--h:74%"></span>
+                    <span class="on" style="--h:92%"></span><span style="--h:68%"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card__bottom">
+            <h3 class="card__title">Веб-платформа</h3>
+            <p class="card__text">Личный кабинет с&nbsp;аналитикой: заявки, клиенты и&nbsp;показатели бизнеса на&nbsp;одном экране.</p>
+          </div>
+        </article>
+
+        <!-- 02 -->
+        <article class="card card--accent" data-reveal>
+          <div class="card__top"><span>02 / 03</span><span class="chip">концепт</span></div>
+          <div class="mock" aria-hidden="true">
+            <div class="phone">
+              <div class="phone__screen">
+                <div class="phone__island"></div>
+                <p class="phone__title">Запись на&nbsp;сегодня</p>
+                <div class="slot"><i></i><div><b>10:30</b><span>Консультация</span></div></div>
+                <div class="slot slot--on"><i></i><div><b>12:00</b><span>Первый приём</span></div></div>
+                <div class="slot"><i></i><div><b>15:45</b><span>Повторный визит</span></div></div>
+                <div class="phone__btn">Записаться</div>
+              </div>
+            </div>
+          </div>
+          <div class="card__bottom">
+            <h3 class="card__title">Мобильное приложение</h3>
+            <p class="card__text">Сервис записи и&nbsp;оплаты услуг: клиент выбирает время за&nbsp;три касания.</p>
+          </div>
+        </article>
+
+        <!-- 03 -->
+        <article class="card card--paper" data-reveal>
+          <div class="card__top"><span>03 / 03</span><span class="chip">концепт</span></div>
+          <div class="mock" aria-hidden="true">
+            <div class="chat">
+              <p class="msg msg--user">Где мой заказ №&nbsp;1042?</p>
+              <p class="msg msg--bot">Передан в&nbsp;доставку&nbsp;— приедет завтра до&nbsp;18:00. Прислать трек-номер?</p>
+              <p class="msg msg--user">Да, пожалуйста</p>
+              <p class="msg msg--bot msg--typing"><i></i><i></i><i></i></p>
+            </div>
+          </div>
+          <div class="card__bottom">
+            <h3 class="card__title">AI-ассистент</h3>
+            <p class="card__text">Помощник поддержки, который отвечает клиентам по&nbsp;данным из&nbsp;ваших систем.</p>
+          </div>
+        </article>
+
+        <!-- Ваш проект -->
+        <a class="card card--empty" href="#contact" data-reveal>
+          <div class="card__top"><span>01 / ∞</span><span class="chip">свободно</span></div>
+          <div class="card__plus" aria-hidden="true"></div>
+          <div class="card__bottom">
+            <h3 class="card__title">Здесь может быть ваш проект</h3>
+            <p class="card__text">Место для первого кейса студии. Расскажите о&nbsp;задаче&nbsp;— начнём с&nbsp;бесплатной консультации.</p>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ПРОЦЕСС ============ -->
+  <section class="section section--tint" id="process">
+    <div class="container">
+      <div class="section__head">
+        <h2 class="section__title" data-reveal>Как мы <em>работаем</em>.</h2>
+        <p class="section__note" data-reveal>Пять шагов от&nbsp;первого разговора до&nbsp;продукта в&nbsp;руках пользователей.</p>
+      </div>
+
+      <ol class="steps">
+        <li class="step" data-reveal>
+          <span class="step__num">01</span>
+          <h3 class="step__title">Знакомство</h3>
+          <p class="step__text">Обсуждаем задачу, цели и&nbsp;ограничения. Это бесплатно и&nbsp;ни к&nbsp;чему не&nbsp;обязывает.</p>
+        </li>
+        <li class="step" data-reveal>
+          <span class="step__num">02</span>
+          <h3 class="step__title">Аналитика и&nbsp;оценка</h3>
+          <p class="step__text">Изучаем рынок и&nbsp;пользователей, собираем требования, считаем сроки и&nbsp;бюджет по&nbsp;этапам.</p>
+        </li>
+        <li class="step" data-reveal>
+          <span class="step__num">03</span>
+          <h3 class="step__title">Дизайн и&nbsp;прототип</h3>
+          <p class="step__text">Показываем кликабельный прототип до&nbsp;начала разработки&nbsp;— менять на&nbsp;этом этапе дёшево.</p>
+        </li>
+        <li class="step" data-reveal>
+          <span class="step__num">04</span>
+          <h3 class="step__title">Разработка</h3>
+          <p class="step__text">Работаем двухнедельными спринтами. В&nbsp;конце каждого&nbsp;— демо и&nbsp;план на&nbsp;следующий.</p>
+        </li>
+        <li class="step step--final" data-reveal>
+          <span class="step__num">05</span>
+          <h3 class="step__title">Запуск и&nbsp;поддержка</h3>
+          <p class="step__text">Тестируем, публикуем и&nbsp;остаёмся на&nbsp;связи: следим за&nbsp;продуктом и&nbsp;развиваем его дальше.</p>
+        </li>
+      </ol>
+
+      <div class="formats">
+        <article class="format" data-reveal>
+          <p class="format__tag">формат 01</p>
+          <h3 class="format__title">Фиксированная цена</h3>
+          <p class="format__text">Когда задача понятна и&nbsp;описана. Бюджет и&nbsp;сроки фиксируем в&nbsp;договоре до&nbsp;начала работ.</p>
+        </article>
+        <article class="format" data-reveal>
+          <p class="format__tag">формат 02</p>
+          <h3 class="format__title">Время и&nbsp;материалы</h3>
+          <p class="format__text">Когда продукт развивается и&nbsp;требования меняются. Оплата за&nbsp;фактически отработанное время.</p>
+        </article>
+        <article class="format" data-reveal>
+          <p class="format__tag">формат 03</p>
+          <h3 class="format__title">Сопровождение</h3>
+          <p class="format__text">Когда продукт уже работает. Ежемесячный пакет часов на&nbsp;поддержку и&nbsp;новые функции.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ВОПРОСЫ ============ -->
+  <section class="section" id="faq">
+    <div class="container faq">
+      <div class="faq__head">
+        <h2 class="section__title" data-reveal>Частые <em>вопросы</em>.</h2>
+        <p class="section__note" data-reveal>Не&nbsp;нашли свой? <a class="link link--inline" href="#contact">Напишите нам</a>&nbsp;— ответим в&nbsp;течение рабочего дня.</p>
+      </div>
+
+      <div class="acc acc--dark" data-accordion>
+        <div class="acc__item is-open">
+          <button class="acc__head" type="button" aria-expanded="true" aria-controls="faq-1">
+            <span class="acc__title">Вы новая студия. Почему вам можно доверить проект?</span>
+            <span class="acc__toggle" aria-hidden="true"></span>
+          </button>
+          <div class="acc__body" id="faq-1"><div class="acc__inner">
+            <p class="faq__text">Именно поэтому мы снижаем ваши риски условиями работы. Проект делится на&nbsp;короткие этапы: вы платите за&nbsp;этап и&nbsp;каждые две недели видите работающий результат. Код, макеты и&nbsp;доступы&nbsp;— у&nbsp;вас с&nbsp;первого дня, так что вы ни в&nbsp;какой момент не&nbsp;зависите от&nbsp;нас.</p>
+          </div></div>
+        </div>
+
+        <div class="acc__item">
+          <button class="acc__head" type="button" aria-expanded="false" aria-controls="faq-2">
+            <span class="acc__title">Сколько стоит разработка?</span>
+            <span class="acc__toggle" aria-hidden="true"></span>
+          </button>
+          <div class="acc__body" id="faq-2"><div class="acc__inner">
+            <p class="faq__text">Зависит от&nbsp;объёма и&nbsp;сложности. После знакомства и&nbsp;брифа мы готовим оценку с&nbsp;разбивкой по&nbsp;этапам&nbsp;— вы видите, из&nbsp;чего складывается цена и&nbsp;на&nbsp;чём можно сэкономить.</p>
+          </div></div>
+        </div>
+
+        <div class="acc__item">
+          <button class="acc__head" type="button" aria-expanded="false" aria-controls="faq-3">
+            <span class="acc__title">Какие сроки у&nbsp;проекта?</span>
+            <span class="acc__toggle" aria-hidden="true"></span>
+          </button>
+          <div class="acc__body" id="faq-3"><div class="acc__inner">
+            <p class="faq__text">Небольшой сайт&nbsp;— это недели, первая версия приложения или платформы&nbsp;— обычно несколько месяцев. Точные сроки называем после аналитики и&nbsp;фиксируем в&nbsp;договоре.</p>
+          </div></div>
+        </div>
+
+        <div class="acc__item">
+          <button class="acc__head" type="button" aria-expanded="false" aria-controls="faq-4">
+            <span class="acc__title">Можно заказать только дизайн или только разработку?</span>
+            <span class="acc__toggle" aria-hidden="true"></span>
+          </button>
+          <div class="acc__body" id="faq-4"><div class="acc__inner">
+            <p class="faq__text">Да. Подключаемся на&nbsp;любом этапе: можем нарисовать интерфейс для вашей команды разработки, реализовать готовые макеты или провести аудит существующего продукта.</p>
+          </div></div>
+        </div>
+
+        <div class="acc__item">
+          <button class="acc__head" type="button" aria-expanded="false" aria-controls="faq-5">
+            <span class="acc__title">Кому принадлежат код и&nbsp;дизайн?</span>
+            <span class="acc__toggle" aria-hidden="true"></span>
+          </button>
+          <div class="acc__body" id="faq-5"><div class="acc__inner">
+            <p class="faq__text">Вам. Исключительные права на&nbsp;результат передаются по&nbsp;договору, а&nbsp;репозиторий и&nbsp;макеты с&nbsp;самого начала ведутся в&nbsp;ваших аккаунтах.</p>
+          </div></div>
+        </div>
+
+        <div class="acc__item">
+          <button class="acc__head" type="button" aria-expanded="false" aria-controls="faq-6">
+            <span class="acc__title">Что происходит после запуска?</span>
+            <span class="acc__toggle" aria-hidden="true"></span>
+          </button>
+          <div class="acc__body" id="faq-6"><div class="acc__inner">
+            <p class="faq__text">Даём гарантию на&nbsp;исправление ошибок и&nbsp;предлагаем сопровождение: мониторинг, доработки и&nbsp;развитие продукта. Если захотите вести проект своей командой&nbsp;— передадим документацию и&nbsp;поможем войти в&nbsp;код.</p>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ КОНТАКТЫ ============ -->
+  <section class="panel panel--contact" id="contact">
+    <div class="container contact">
+      <div class="contact__left">
+        <h2 class="contact__title" data-reveal>Обсудить<br>проект<em>.</em></h2>
+        <p class="contact__lead" data-reveal>Расскажите о&nbsp;задаче&nbsp;— в&nbsp;течение рабочего дня вернёмся с&nbsp;вопросами и&nbsp;предложим время для знакомства.</p>
+        <div class="contact__links" data-reveal>
+          <!-- ЗАМЕНИТЬ: рабочая почта студии -->
+          <a class="contact__mail" id="contact-email" href="mailto:hello@noda.example">hello@noda.example</a>
+          <!-- Telegram: раскомментируйте и подставьте свой адрес
+          <a class="btn btn--line" href="https://t.me/ВАШ_АККАУНТ" target="_blank" rel="noopener">Написать в Telegram
+            <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+          -->
+        </div>
+      </div>
+
+      <form class="form" id="brief" novalidate data-reveal>
+        <div class="field">
+          <label for="f-name">Как вас зовут</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="f-contact">Телефон, Telegram или почта</label>
+          <input id="f-contact" name="contact" type="text" autocomplete="off" required>
+        </div>
+
+        <fieldset class="chips">
+          <legend>Что нужно сделать</legend>
+          <label><input type="checkbox" name="type" value="Веб-платформа"><span>Веб-платформа</span></label>
+          <label><input type="checkbox" name="type" value="Мобильное приложение"><span>Мобильное приложение</span></label>
+          <label><input type="checkbox" name="type" value="Дизайн"><span>Дизайн</span></label>
+          <label><input type="checkbox" name="type" value="Интернет-магазин"><span>Интернет-магазин</span></label>
+          <label><input type="checkbox" name="type" value="AI и автоматизация"><span>AI и&nbsp;автоматизация</span></label>
+          <label><input type="checkbox" name="type" value="Другое"><span>Другое</span></label>
+        </fieldset>
+
+        <div class="field">
+          <label for="f-about">Пара слов о&nbsp;проекте</label>
+          <textarea id="f-about" name="about" rows="3"></textarea>
+        </div>
+
+        <div class="form__foot">
+          <button class="btn btn--accent" type="submit">Отправить заявку
+            <svg class="ico" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </button>
+          <p class="form__note">Нажимая кнопку, вы соглашаетесь на&nbsp;обработку персональных данных.</p>
+        </div>
+        <p class="form__status" id="brief-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<!-- ============ ПОДВАЛ ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a class="logo" href="#top" aria-label="Нода — наверх">
+          <svg class="logo__mark" aria-hidden="true"><use href="#i-logo"/></svg>
+          <span class="logo__text">нода</span>
+        </a>
+        <p>Студия разработки цифровых продуктов</p>
+      </div>
+      <nav class="footer__col" aria-label="Разделы">
+        <p class="footer__label">Студия</p>
+        <a href="#principles">Принципы</a>
+        <a href="#services">Услуги</a>
+        <a href="#work">Проекты</a>
+      </nav>
+      <nav class="footer__col" aria-label="Работа с нами">
+        <p class="footer__label">Работа с&nbsp;нами</p>
+        <a href="#process">Процесс</a>
+        <a href="#faq">Вопросы</a>
+        <a href="#contact">Оставить заявку</a>
+      </nav>
+      <div class="footer__col">
+        <p class="footer__label">Связаться</p>
+        <a href="mailto:hello@noda.example" data-email-link>hello@noda.example</a>
+      </div>
+    </div>
+
+    <p class="footer__word" aria-hidden="true">нода</p>
+
+    <div class="footer__bottom">
+      <p>© <span id="year">2026</span> Нода</p>
+      <a href="#top">Наверх ↑</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js" defer></script>
+</body>
+</html>
